@@ -1,2 +1,2 @@
 # welcome-page
-basic functionalities covered with flask, ninja templates
+basic functionalities covered with flask, ninja templates 
