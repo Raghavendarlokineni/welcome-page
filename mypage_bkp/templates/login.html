@@ -1,0 +1,54 @@
+<!--handling of login page -->
+
+{% if 'login' == input %}
+
+<head>
+    <title>welcome</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+</head>
+<body>
+    <div class="container" style="margin-top:50px;">
+        <div class="row">
+            <div class="col-md-5 col-md-offset-3">
+                <form action="{{url_for('login')}}" method="POST">
+                    {% if error %}
+                        <p class=error><strong>Error:</strong> {{ error }}
+                    {% endif %}
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon3">Username</span>
+                        <input type="text" class="form-control" name="user" aria-describedby="basic-addon3">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon3">Password</span>
+                        <input type="text" class="form-control" name="password" aria-describedby="basic-addon3">
+                    </div>
+                    <br>
+                    <input type="Submit" value="Login" class="btn btn-default btn-sm">
+                    {% if error == 'user_unregistered' %}
+                        <a href = "http://127.0.0.1:5000/register"> Sign Up</a>
+                    {% endif %}
+               </form>
+           </div>
+        </div>
+    </div>
+</body>
+
+<!-- handles when user login success-->
+
+{% elif 'login_success' == input %}
+
+    <h2> User Login success </h2> 
+    <br>
+    <h4> would you like to </h4>
+    <a href = "http://127.0.0.1:5000/{{ user }}/add_family"> add_family </a>
+    <br>
+    <a href = "http://127.0.0.1:5000/{{ user }}/add_member"> add_member </a>
+    <br>
+    <a href = "http://127.0.0.1:5000/{{ user }}/family_details"> family_details </a>
+    <br>
+
+{% endif %}
+
+

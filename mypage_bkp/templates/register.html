@@ -1,0 +1,220 @@
+
+<!-- handling of admin page -->
+{% if 'register' == input%}
+    <h4>welcome to the User Registration</h4>
+ 
+    <head>
+    <title>resgister</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    </head>
+    
+    {%if error%}
+    <h4> {{error }}</h4>         
+    {%endif%} 
+    <body>
+    <div class="container" style="margin-top:50px;">
+        <div class="row">
+            <div class="col-md-5 col-md-offset-3">
+                <form action="{{url_for('register')}}" method="POST">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon3">User Name</span>
+                        <input type="text" class="form-control" name="user" aria-describedby="basic-addon3">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon3">Password</span>
+                        <input type="text" class="form-control" name="pwd" aria-describedby="basic-addon3">
+                    </div>
+                    <br>
+                    <input type="Submit" value="Register" class="btn btn-default btn-sm">
+               </form>
+           </div>
+        </div>
+    </div>
+    </body>
+    
+{% elif "register_fail" == input %}
+    <head>
+    <title>welcome</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+   </head>
+
+    <body>
+    <div class="container" style="margin-top:50px;">
+        <div class="row">
+            <div class="col-md-5 col-md-offset-3">
+ 
+            {% if error %}
+                <p class=error><strong>Error:</strong> {{ error }}
+            {% endif %}
+                <form action="{{url_for('register')}}" method="POST">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon3">User Name</span>
+                        <input type="text" class="form-control" name="user" aria-describedby="basic-addon3">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon3">Password</span>
+                        <input type="text" class="form-control" name="pwd" aria-describedby="basic-addon3">
+                    </div>
+                    <br>
+                    <input type="Submit" value="Register" class="btn btn-default btn-sm">
+               </form>
+           </div>
+        </div>
+    </div>
+    </body>  
+
+<!-- handles when user registration is success -->
+{% elif 'register_success' == input %}
+    <h2> User registration success </h2> <br>
+    <br>
+    <a  href="http://127.0.0.1:5000/{{user}}/add_family"> add_family</a>
+    <br>
+    <a  href="http://127.0.0.1:5000/{{user}}/family_details"> see_family</a>
+
+
+{% elif 'check_family_presence' == input %}
+    
+    <head>
+    <title>welcome</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    </head>
+    {% if 'add' == action %}
+    <h2> Hey {{ user }}, glad to add your family details </h2>
+    <br>
+    {% elif 'display' == action %}
+    {% endif %}
+
+    <body>
+    <div class="container" style="margin-top:50px;">
+        <div class="row">
+            <div class="col-md-5 col-md-offset-3">
+                <form action="{{url_for('add_family', user = user)}}" method="POST">
+                    enter your family name to check if it is already present
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon3">Family Name</span>
+                        <input type="text" class="form-control" name="family_name" aria-describedby="basic-addon3">
+                    </div>
+                    {% if error %}
+                         <p class=error><strong>Error:</strong> {{ error }}
+                    {% endif %}
+                    <br>
+                    <input type="Submit" value="Verify" class="btn btn-default btn-sm">
+               </form>
+           </div>
+        </div>
+    </div>
+    </body>
+
+{% elif 'add_member_final' == input %}
+    <head>
+    <title>register</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    </head>
+    
+    {% if error %}
+        <p class = error > <strong> Error: </strong> {{ error }}
+
+    {% elif flag == "family_present" %}
+
+        <h5> YEAH.....!!!!!!!, {{user}}, family name {{family_name}} exists,<br> 
+        you are ready to go to add your family members</h5>
+    
+    {% else %}
+    
+        <h5> Hey {{ user }}, Family name {{family_name }} successfully added  </h5>
+        <br>
+        <h5> Please enter your family member details to add into your family </h5>
+        <br>
+    {% endif %}
+
+    <body>
+    <div class="container" style="margin-top:50px;">
+        <div class="row">
+            <div class="col-md-5 col-md-offset-3">
+                <form action="{{url_for('add_member_final', user = user, family_name = family_name)}}" method="POST">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon3">Member Name</span>
+                        <input type="text" class="form-control" name="member" aria-describedby="basic-addon3">
+                    </div>
+                    <br>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon3">Member Age</span>
+                        <input type="int" class="form-control" name="age" aria-describedby="basic-addon3">
+                    </div>
+                    <br>
+                    <input type="Submit" value="Add" class="btn btn-default btn-sm">
+               </form>
+           </div>
+        </div>
+    </div>
+    </body>
+
+<!-- handles after successful member addition -->
+{% elif 'mem_add_succ' == input%}
+    <h4> Hey {{user}}, successfully added {{ member }} to your family {{family_name}} </h4>
+    <br>
+    <h4> would you like to ?</h4>
+    <a href = "http://127.0.0.1:5000/{{user}}/{{family_name}}/add_member">add_member </a>
+    <br> 
+    <a href = "http://127.0.0.1:5000/{{user}}/family_details">see_family </a> 
+
+
+{% elif 'family_empty' == input%}
+   <h2> OOOPSSSS.....!!!!!!!, {{user}} family name {{family_name}} doesn't exist</h2>
+   <br>
+   You Can try again... 
+   <a href = "http://127.0.0.1:5000/<user>"> RE_TRY </a>
+
+
+{% elif 'display_details' == input%}
+
+      <head>
+    <title>display</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    </head>
+    
+    <body>
+    <div class="container" style="margin-top:50px;">
+        <div class="row">
+            <div class="col-md-5 col-md-offset-3">
+            {% if error %}
+            <p class=error><strong>Error:</strong> {{ error }}
+            {% endif %}
+                <form action="{{url_for('family_details', user = user)}}" method="POST">
+                    enter your family name to get the details 
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon3">Family Name</span>
+                        <input type="text" class="form-control" name="family_name" aria-describedby="basic-addon3">
+                    </div>
+                    <br>
+                    <input type="Submit" value="Get Details" class="btn btn-default btn-sm">
+               </form>
+           </div>
+        </div>
+    </div>
+    </body>
+
+{% elif input == "display"%}
+        {% for item in db %}
+           member name <h4>{{item[0]}} </h4> 
+           member age <h4>{{item[1]}} </h4> 
+        {%endfor%}
+
+    <h4> would you like to </h4>
+    <a href = "http://127.0.0.1:5000/{{ user }}/add_family"> add_family </a>
+    <br>
+    <a href = "http://127.0.0.1:5000/{{ user }}/add_member"> add_member </a>
+    <br>
+    <a href = "http://127.0.0.1:5000/{{ user }}/family_details"> family_details </a>
+    <br>
+
+{% endif %}
+
+

@@ -1,0 +1,13 @@
+<!doctype html>
+
+
+{% if 'display_details' == input %}
+    entering html
+    {% for row in family_db%}                                 
+        <h3>name {{ row[0] }}</h3> <h3>age {{ row[1] }}</h3>
+    {% endfor %} 
+
+{% elif 'error_db' == input %}
+    <h4> OOOPPPPSSS.......!!!!!!!! family details not found </h4>
+
+{% endif %}

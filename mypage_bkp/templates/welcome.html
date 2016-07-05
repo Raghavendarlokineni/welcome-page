@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<h4>welcome to Home Page </h4>
+<head>
+<title>welcome</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+</head>
+<body>
+    <div class="container" style="margin-top:50px;">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+            <ul class="nav nav-stacked">
+            <li role="presentation"><a href="http://127.0.0.1:5000/login">Login</a></li>
+            <li role="presentation"><a href="http://127.0.0.1:5000/register">Sign Up</a></li>
+            </ul>
+            <!--   <a href="http://127.0.0.1:5000/login" > Login </a>
+               <br>
+               <a href="http://127.0.0.1:5000/register" > Sign_up</a>
+            -->
+            </div>
+        </div>
+   </div>
+</body>
+</html>
+
