@@ -1,5 +1,6 @@
-import sqlite3
+""" module for creating and operating the database """
 
+import sqlite3
 
 def login_table(table_name, name = None, age = None):
     """ creates the tables for different users """
@@ -40,22 +41,8 @@ def read_db(table_name):
     try:
         c.execute("SELECT * FROM table_"+table_name)
         db = c.fetchall()
-        
         conn.close()
         return db
     except sqlite3.OperationalError:
         return 0
 
-"""register_table('raghu', 'raghu')
-db = read_db("register")
-for row in db:
-    print "username " + row[0]
-    print "pwd " + row[1]
-
-
-login_table('lokineni','raghu', '28')
-db = read_db("lokineni")
-for row in db:
-    print "name : " + row[0]
-    print "age : {0}" .format( row[1])
-"""    
