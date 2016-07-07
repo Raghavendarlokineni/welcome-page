@@ -1,5 +1,4 @@
-from flask import *
-import sqlite3
+from flask import Flask, render_template, request
 import database
 
 app = Flask(__name__)
@@ -22,7 +21,6 @@ def login():
         user = request.form['user']
         password = request.form['password']
         
-        print request.method 
         if ((not user) and (not password)):
             error = "credentials missing"
         elif(not user):
@@ -61,17 +59,16 @@ def register():
             error = "username missing"
         elif (not password):
             error = "password missing"
-        #verify, if username exists or not, if exists inform to the user to select a different username
         else:
             try :
                 db = database.read_db('register')  
                 for row in db:
+                    #verify, if username exists or not, if exists inform to the user to select a different username
                     if(row[0] == user):
                         error = "username already exists"
             except TypeError:
                 database.register_table(user, password)
                 return render_template("register.html", input = "register_success", user = user)
-            #if (error != "username already exists"):
             if (not error):
                 database.register_table(user, password)
                 return render_template("register.html", input = "register_success", user = user)
@@ -156,7 +153,7 @@ def add_member_final(user, family_name):
                 return render_template("register.html", input = "mem_add_succ", user = user, family_name = family_name \
 				   , member = member)
 
-        return render_template("register.html", input = "add_member_final", error = error)
+    return render_template("register.html", input = "add_member_final", error = error)
 
 @app.route('/<user>/family_details', methods = ['GET', 'POST'])
 def family_details(user):
@@ -181,14 +178,8 @@ def family_details(user):
 
 @app.errorhandler(404)
 def page_not_found(e):
+    """ Error handling when URL not found """
     return render_template("404.html")
-
-@app.route('/error_handler')
-def error_handler():
-    try:
-        return render_template("welcome.html", input = z)
-    except Exception as e:
-        return render_template("500.html", error = e)
 
 if __name__ == "__main__":
     app.run(debug=True)
