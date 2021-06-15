@@ -24,7 +24,7 @@ def login():
         if ((not user) and (not password)):
             error = "credentials missing"
         elif(not user):
-	    error = "username missing"
+            error = "username missing"
         elif(not password):
             error = "password missing"
         else:
@@ -33,19 +33,19 @@ def login():
                 db = database.read_db('register')
                 for row in db:
                     if((row[0] == user) & (row[1] == password)):
-	                return render_template("login.html", input = "login_success", user = user)
+                        return render_template("login.html", input = "login_success", user = user)
                     elif((row[0] == user) & (row[1] != password)):
-	                error = "wrong credentials"
+                        error = "wrong credentials"
                     else:
-	                error = "user_unregistered"
+                        error = "user_unregistered"
             except TypeError:
-	        error = "user_unregistered"
+                error = "user_unregistered"
     return render_template("login.html", input = 'login', error = error) 
 
 @app.route('/register', methods = ["GET", "POST"])
 def register():
     """ hanldes the registration page """
-  
+
     error = None  
     if( request.method == 'GET'):  
         return render_template("register.html", input = "register")
@@ -94,17 +94,17 @@ def add_family(user):
             check_family_name = database.login_table(family_name)
             #check to verify if table creation with family name has failed
             if (check_family_name is not "Fail"):
-   	        return render_template("register.html", input = "add_member_final", user = user, family_name = family_name)
+                return render_template("register.html", input = "add_member_final", user = user, family_name = family_name)
             else:
                 return render_template("500.html", error = "table creation failed")
-	else:     
-            return render_template("register.html", input = "add_member_final", flag = "family_present", user = user \
-                                 , family_name = family_name)
+    else:     
+        return render_template("register.html", input = "add_member_final", flag = "family_present", user = user \
+                                , family_name = family_name)
 
 @app.route('/<user>/add_member', methods = ['GET','POST'])
 def add_member(user):
     """ adds family details based on user input """
- 
+
     if('GET' == request.method):
         return render_template("register.html", input = "check_family_presence", user = user)
     elif('POST' == request.method):
@@ -116,8 +116,8 @@ def add_member(user):
             check = database.read_db(family_name)
         
             if(0 == check):
-   	        return render_template("register.html", input = "family_empty", user = user, family_name = family_name)
-	    else:     
+                return render_template("register.html", input = "family_empty", user = user, family_name = family_name)
+            else:     
                 return render_template("register.html", input = "family_exists", user = user, family_name = family_name)
 
 @app.route('/<user>/<family_name>/add_member', methods = ['GET','POST'])
@@ -147,11 +147,11 @@ def add_member_final(user, family_name):
             except TypeError:    
                 database.login_table(family_name, member, age)
                 return render_template("register.html", input = "mem_add_succ", user = user, family_name = family_name \
-				   , member = member)
+                , member = member)
             if(not error):
                 database.login_table(family_name, member, age)
                 return render_template("register.html", input = "mem_add_succ", user = user, family_name = family_name \
-				   , member = member)
+                , member = member)
 
     return render_template("register.html", input = "add_member_final", error = error)
 
@@ -163,7 +163,7 @@ def family_details(user):
         return render_template("register.html", input = "display_details", user = user)
     elif('POST' == request.method):
         family_name = request.form['family_name']
-       
+    
         if(not family_name):
             error = "missing family name"
         else:
@@ -174,7 +174,7 @@ def family_details(user):
                 error = "family db empty"
     
         return render_template("register.html", input = "display_details", error = error, user = user)
- 
+
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -183,5 +183,3 @@ def page_not_found(e):
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-
